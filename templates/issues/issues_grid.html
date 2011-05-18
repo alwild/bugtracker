@@ -1,0 +1,48 @@
+{% load qstring %}
+{% qstring as current_qstring %}
+{% if issues and issues.paginator.count > 0 %}
+<table>
+	<tr>
+		<th><a href="?{{ current_qstring|qstring_sort:'id' }}">IssueID</a></th>
+		<th><a href="?{{ current_qstring|qstring_sort:'title' }}">Title</a></th>
+		<th><a href="?{{ current_qstring|qstring_sort:'status' }}">Status</a></th>
+		<th><a href="?{{ current_qstring|qstring_sort:'category' }}">Category</a></th>
+		<th><a href="?{{ current_qstring|qstring_sort:'severity' }}">Priority</a></th>
+		<th><a href="?{{ current_qstring|qstring_sort:'project' }}">Project</a></th>
+		<th><a href="?{{ current_qstring|qstring_sort:'assigned_user' }}">Assigned User</a></th>
+		<th><a href="?{{ current_qstring|qstring_sort:'updated_date' }}">Updated Date</a></th>
+	</tr>
+	{% for issue in issues.object_list %}
+	<tr class="{% cycle 'even' 'odd' %}">
+		<td> <a href="{{ issue.get_absolute_url }}">{{ issue.id }}</a> </td>
+		<td> <a href="{{ issue.get_absolute_url }}">{{ issue.title }}</a> </td>
+		<td> {{ issue.status }} </td>
+		<td> {{ issue.category }} </td>
+		<td> {{ issue.severity }} </td>
+		<td> {{ issue.project }} </td>
+		<td> {{ issue.assigned_user }} </td>
+		<td> {{ issue.updated_date|date:"SHORT_DATE_FORMAT" }} </td>
+	</tr>
+	{% endfor %}
+</table>
+<div class="pagination">
+    <span class="step-links">
+        {% if issues.has_previous %}
+            <a href="?{{ current_qstring|qstring_page:issues.previous_page_number }}">&lt;&lt;</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ issues.number }} of {{ issues.paginator.num_pages }}
+        </span>
+
+        {% if issues.has_next %}
+            <a href="?{{ current_qstring|qstring_page:issues.next_page_number }}">&gt;&gt;</a>
+        {% endif %}
+        <span class="total">Total {{ issues.paginator.count }}</span>
+    </span>
+</div>
+{% else %}
+<div>
+No items found
+</div>
+{% endif %}

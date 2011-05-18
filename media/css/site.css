@@ -1,0 +1,85 @@
+ul#nav li
+{
+	float: left;
+	list-style: none;
+	padding: 5px;
+}
+
+.search-form label 
+{
+	float: left;
+	width: 100px;
+	margin-top: 5px;
+}
+
+.search-form .col, .issue-details .col
+{
+	float: left;
+	width: 48%;	
+}
+
+.issue-details .description
+{
+	clear: both;
+	margin-top: 10px;
+	padding: 0px;
+}
+
+.search-form #id_title
+{
+	width: 200px;
+}
+
+.buttons
+{
+	clear: both;	
+}
+
+.issue-update label
+{
+	float: left;
+	width: 100px;
+}
+
+.issue-update select
+{
+	width: 200px;	
+}
+
+.issue-update #id_note
+{
+	width: 400px;
+	height: 200px;	
+}
+
+.history
+{
+	margin-bottom:10px;
+}
+
+.attachments
+{
+	margin-top:10px;
+}
+
+.issue-create label
+{
+	float: left;
+	width: 100px;
+}
+
+.issue-create select, .issue-create input
+{
+	width:200px;
+}
+
+fieldset
+{
+	padding: 10px;	
+}
+
+fieldset legend
+{
+	font-weight: bold;
+	font-size: 12pt;	
+}

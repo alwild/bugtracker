@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="issue-details">
+	<div class="col">
+		<div>
+			<span>ID:</span>
+			<span>{{ issue.id }}</span>
+		</div>
+		<div>
+			<span>Project:</span>
+			<span>{{ issue.project }}</span>
+		</div>
+		<div>
+			<span>Assigned User:</span>
+			<span>{{ issue.assigned_user }}</span>
+		</div>
+		<div>
+			<span>Created By:</span>
+			<span>{{ issue.created_user }}</span>
+		</div>
+	</div>
+	<div class="col">
+		<div>
+			<span>Status:</span>
+			<span>{{ issue.status }}</span>
+		</div>
+		<div>
+			<span>Severity:</span>
+			<span>{{ issue.severity }}</span>
+		</div>
+		<div>
+			<span>Category:</span>
+			<span>{{ issue.category }}</span>
+		</div>
+		<div>
+			<span>Estimated Time:</span>
+			<span>{{ issues.estimated_time|default:0 }}</span> hours
+		</div>
+	</div>
+	<div style="clear:both"></div>
+	{% if issue.attachment_set.count > 0 %}
+	<div class="attachments">
+		<div>Attachments:</div>
+		<ul>
+		{% for attachment in issue.attachment_set.all %}
+			<li><a href="{{MEDIA_URL}}/{{attachment.file}}" target="_blank"> {{ attachment }}</a></li>
+		{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+	<div class="description">
+		<div>Description:</div>
+		<div>{{ issue.description|safe }}</div>
+	</div>
+	
+	{% if issue.issuehistory_set.count > 0 %}
+	<fieldset>
+		<legend>History</legend>
+		{% for history in issue.issuehistory_set.all %}
+		<div class="history">
+			<div>
+				<span><strong>{{ history.created_user }}</strong> on <strong>{{ history.created_date|date:"SHORT_DATE_FORMAT" }}</strong></span>
+			</div>
+			<div>
+				<span>time spent:</span>
+				<span>{{ history.time_spent|default:"0" }}</span> hours
+			</div>
+			{% if history.status %}
+			<div>
+				<span>Status:</span>
+				<span>{{ history.status }}</span>
+			</div>
+			{% endif %}
+			
+			{% if history.severity %}
+			<div>
+				<span>Severity:</span>
+				<span>{{ history.severity }}</span>
+			</div>
+			{% endif %}
+			
+			{% if history.category %}
+			<div>
+				<span>Category:</span>
+				<span>{{ history.category }}</span>
+			</div>
+			{% endif %}
+			
+			{% if history.project %}
+			<div>
+				<span>Project:</span>
+				<span>{{ history.project }}</span>
+			</div>
+			{% endif %}
+			
+			{% if history.assigned_user %}
+			<div>
+				<span>Assigned User:</span>
+				<span>{{ history.assigned_user }}</span>
+			</div>
+			{% endif %}
+			<div class="notes">
+				{{ history.note|safe }}
+			</div>
+		</div>
+		{% endfor %}
+	</fieldset>
+	{% endif %}
+</div>
+
+{% if user.is_active %}
+<fieldset>
+	<legend>Update</legend>
+<form method="post" action="{% url bugtracker.issues.views.issue_update issue.id %}" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="issue-update">
+	<div>
+		<span>{{ form.status.label_tag }}</span>
+		<span>{{ form.status }}</span>
+	</div>
+	<div>
+		<span>{{ form.assigned_user.label_tag }}</span>
+		<span>{{ form.assigned_user }}</span>
+	</div>
+	<div>
+		<span>{{ form.time_spent.label_tag }}</span>
+		<span>{{ form.time_spent }}</span> hours
+	</div>
+	<div>
+		<span>{{ form.severity.label_tag }}</span>
+		<span>{{ form.severity }}</span>
+	</div>
+	<div>
+		<span>{{ form.category.label_tag }}</span>
+		<span>{{ form.category }}</span>
+	</div>
+	<div>
+		<span>{{ form.project.label_tag }}</span>
+		<span>{{ form.project }}</span>
+	</div>
+	<div>
+		<div>{{ form.note.label_tag }}</div>
+		<div style='clear:both'>{{ form.note }}</div>
+	</div>
+	<div>
+		<span>Add Attachment</span>
+		<span>{{ form.file }}</span>
+	</div>
+</div>
+<div class="buttons">
+	<input type="submit" value="Submit" />
+</div>
+</form>
+</fieldset>
+{% endif %}
+
+{% endblock %}

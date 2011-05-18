@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<div class="errors">
+	{{ form.errors }}
+</div>
+{% endif %}
+
+<form method="post" action="{% url bugtracker.issues.views.issue_create %}" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="issue-create">
+	<div>
+		<span>{{ form.title.label_tag }}</span>
+		<span>{{ form.title }}</span>
+	</div>
+	
+	<div>
+		<span>{{ form.project.label_tag }}</span>
+		<span>{{ form.project }}</span>
+	</div>
+	
+	<div>
+		<span>{{ form.status.label_tag }}</span>
+		<span>{{ form.status }}</span>
+	</div>
+	
+	<div>
+		<span>{{ form.estimated_time.label_tag }}</span>
+		<span>{{ form.estimated_time }}</span> hours
+	</div>
+	
+	<div>
+		<span>{{ form.severity.label_tag }}</span>
+		<span>{{ form.severity }}</span>
+	</div>
+	
+	<div>
+		<span>{{ form.category.label_tag }}</span>
+		<span>{{ form.category }}</span>
+	</div>
+	
+	<div>
+		<span>{{ form.assigned_user.label_tag }}</span>
+		<span>{{ form.assigned_user }}</span>
+	</div>
+	<div style='clear:both'>
+		<div>Description</div>
+		<div>{{ form.description }}</div>
+	</div>
+	
+	<div>
+		<span>{{ form.watchers.label_tag }}</span>
+		<span>{{ form.watchers }}</span>
+	</div>
+	
+	<div>
+		<span>Attachment</span>
+		<span>{{ form.file }}</span>
+	</div>
+</div>
+<div class="buttons">
+	<input type="submit" name="submit" value="Submit" />
+</div>
+
+</form>
+
+{% endblock %}

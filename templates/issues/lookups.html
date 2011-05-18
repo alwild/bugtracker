@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if lookups %}
+	<ul>
+		{% for lookup in lookups %}
+			<li>{{ lookup }} <a href="#" url="{% url bugtracker.issues.views.lookups_delete %}?model_type={{ model_type }}" class='lookups-delete' id='{{ lookup.id }}'>X</a></li>
+		{% endfor %}
+	</ul>
+{% endif %}
+
+<form method="post" action="{% url bugtracker.issues.views.lookups_create %}?model_type={{ model_type }}">
+{% csrf_token %}
+<div>
+	<span>{{ form.title.label_tag }}</span>
+	<span>{{ form.title }}</span>
+</div>
+
+<div>
+	<input type='submit' value='Submit' name='submt' />
+</div>
+
+</form>
+
+{% endblock %}

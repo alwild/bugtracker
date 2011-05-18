@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="get" action="{% url bugtracker.issues.views.search %}">
+<div class="search-form">
+	<div class="col">
+		<div>
+			{{ form.title.label_tag }}
+			{{ form.title }}
+		</div>
+		
+		<div>
+			{{ form.assigned_user.label_tag }}
+			{{ form.assigned_user }}
+		</div>
+		
+		<div>
+			{{ form.status.label_tag }}
+			{{ form.status }}
+		</div>
+		
+		<div>
+			{{ form.severity.label_tag }}
+			{{ form.severity }}
+		</div>
+		
+	</div>
+	<div class="col">
+		<div>
+			{{ form.category.label_tag }}
+			{{ form.category }}
+		</div>
+		
+		<div>
+			{{ form.project.label_tag }}
+			{{ form.project }}
+		</div>
+		
+		<div>
+			{{ form.created_user.label_tag }}
+			{{ form.created_user }}
+		</div>
+		
+		
+		<div>
+			{{ form.updated_date.label_tag }}
+			{{ form.updated_date }}
+		</div>
+				
+		
+		<div>
+			{{ form.created_date.label_tag }}
+			{{ form.created_date }}
+		</div>
+		
+		<div>
+			{{ form.issue_id.label_tag }}
+			{{ form.issue_id }}
+		</div>
+	</div>
+</div>
+
+<div class="buttons">
+	<input type="submit" name="submit" value="Submit" />
+</div>
+
+{% include "issues/issues_grid.html" %}
+
+</form>
+
+{% endblock %}
